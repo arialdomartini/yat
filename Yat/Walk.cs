@@ -15,11 +15,11 @@ namespace Yat
 
         double CalculateLength(List<Town> towns)
         {
-            if (towns.Count <= 1) {
+            if (towns.Count == 0)
+            {
                 return 0;
             }
-
-            return DistanceBetween(towns[0], towns[1]) + CalculateLength(towns.Skip(1).ToList());
+            return Enumerable.Range(0, towns.Count - 1).Select(i => DistanceBetween(towns[i], towns[i + 1])).Sum();
         }
 
         public double Length { 
