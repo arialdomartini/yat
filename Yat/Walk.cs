@@ -11,6 +11,8 @@ namespace Yat
         public Walk(List<Town> towns)
         {
             _towns = towns;
+
+            this.Memoized = Walk.Memoize( (List<Town> t) => CalculateLength(t));
         }
 
         #region IComparable implementation
@@ -31,16 +33,32 @@ namespace Yat
             return Enumerable.Range(0, towns.Count - 1).Select(i => DistanceBetween(towns[i], towns[i + 1])).Sum();
         }
 
+        public Func<List<Town>, double> Memoized;
+
         public double Length { 
             get { 
-                return CalculateLength(_towns);
+                return Memoized(_towns);
             } 
+        }
+
+        public static Func<TSource, TReturn> Memoize<TSource, TReturn>(Func<TSource, TReturn> func)
+        {
+            var cache = new Dictionary<TSource, TReturn>();
+            return s =>
+            {
+                if (!cache.ContainsKey(s))
+                {
+                    cache[s] = func(s);
+                }
+                return cache[s];
+            };
         }
 
         double DistanceBetween(Town town1, Town town2)
         {
             return Math.Sqrt(Math.Pow(town1.x - town2.x, 2) + Math.Pow(town1.y - town2.y, 2));
         }
+
     }
 }
 
