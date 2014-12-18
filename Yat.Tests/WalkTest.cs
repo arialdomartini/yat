@@ -24,17 +24,19 @@ namespace Yat.Tests
             sut.Length.Should ().Be (0);
         }
 
-        [Test()]
-        public void AWalkWith2TownsHasLengthEqualToTheDistanceBetweenTheTown ()
+        [TestCase(0, 0, 0, 0, 0)]
+        [TestCase(0, 10, 0, 2, 8)]
+        [TestCase(0, 0, 3, 4, 5)]
+        public void AWalkWith2TownsHasLengthEqualToTheDistanceBetweenTheTown (int x1, int y1, int x2, int y2, double distance)
         {
             var towns = new List<Town> {
-                new Town (0, 0),
-                new Town (3, 2)
+                new Town (x1, y1),
+                new Town (x2, y2)
             };
 
             var sut = new Walk (towns);
 
-            sut.Length.Should ().Be (4);
+            sut.Length.Should ().Be (distance);
         }
 
 

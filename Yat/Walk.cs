@@ -22,7 +22,7 @@ namespace Yat
         }
 
 
-        public int Length { 
+        public double Length { 
             get { 
                 if(_towns == null || _towns.Count == 0)
                 {
@@ -30,7 +30,9 @@ namespace Yat
                 }
                 else
                 {
-                    return 4;
+                    var town1 = _towns [0];
+                    var town2 = _towns [1];
+                    return Math.Sqrt (Math.Pow (town1.x - town2.x, 2) + Math.Pow (town1.y - town2.y, 2));
                 }
             } 
         }
