@@ -32,10 +32,15 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
-
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="..\..\Yat\Yat.Tests\WalkTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Yat\Yat.csproj">
+      <Project>{3983F5FA-6B57-4BC9-B164-A30B2EA4F326}</Project>
+      <Name>Yat</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
