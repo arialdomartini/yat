@@ -1,2 +1,5 @@
-Yat/bin
-Yat/obj
+*/bin/**
+*/obj/**
+
+packages/**
+Yat.userprefs
