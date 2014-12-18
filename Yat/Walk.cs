@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Yat
 {
@@ -11,19 +12,21 @@ namespace Yat
         {
             _towns = towns;
         }
+
+        double CalculateLength (List<Town> towns)
+        {
+            if(towns.Count <= 1)
+            {
+                return 0;
+            }
+
+            return DistanceBetween (towns [0], towns [1]) + CalculateLength (towns.Skip (1).ToList ());
+
+        }
     
         public double Length { 
             get { 
-                double length = 0;
-                Town previous = null;
-                foreach (var town in _towns) {
-                    if (previous != null)
-                    {
-                        length += DistanceBetween (previous, town);
-                    }
-                    previous = town;
-                }
-                return length;
+                return CalculateLength (_towns);
 
             } 
         }
