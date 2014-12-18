@@ -9,9 +9,9 @@ namespace Yat.Tests
     public class WalkTest
     {
         [Test ()]
-        public void AnEmptyWalkHasLength0 ()
+        public void AWalkWithNoTownsHasLength0 ()
         {
-            var sut = new Walk ();
+            var sut = new Walk (new List<Town>());
 
             sut.Length.Should ().Be (0);
         }
@@ -19,7 +19,7 @@ namespace Yat.Tests
         [Test ()]
         public void AWalkWithOnlyOneTownHasLength0 ()
         {
-            var sut = new Walk (new Town (10, 20));
+            var sut = new Walk (new List<Town> {new Town (10, 20)});
 
             sut.Length.Should ().Be (0);
         }

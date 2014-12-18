@@ -11,36 +11,20 @@ namespace Yat
         {
             _towns = towns;
         }
-
-        public Walk ()
-        {
-        }
-
-        public Walk (Town town)
-        {
-
-        }
-
-
+    
         public double Length { 
             get { 
-                if(_towns == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double length = 0;
-                    Town previous = null;
-                    foreach (var town in _towns) {
-                        if (previous != null)
-                        {
-                            length += DistanceBetween (previous, town);
-                        }
-                        previous = town;
+                double length = 0;
+                Town previous = null;
+                foreach (var town in _towns) {
+                    if (previous != null)
+                    {
+                        length += DistanceBetween (previous, town);
                     }
-                    return length;
+                    previous = town;
                 }
+                return length;
+
             } 
         }
 
