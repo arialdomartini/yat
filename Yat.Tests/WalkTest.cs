@@ -1,19 +1,18 @@
 ﻿using NUnit.Framework;
+using FluentAssertions;
 using System;
 
 namespace Yat.Tests
 {
     [TestFixture ()]
-    public class DnaTest
+    public class WalkTest
     {
         [Test ()]
         public void AnEmptyWalkHasLength0 ()
         {
             var sut = new Walk ();
 
-            var actual = sut.Length;
-
-            Assert.AreEqual (0, actual);
+            sut.Length.Should ().Be (0);
         }
     }
 }
