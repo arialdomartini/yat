@@ -14,6 +14,15 @@ namespace Yat.Tests
 
             sut.Length.Should ().Be (0);
         }
+
+        [Test ()]
+        public void AWalkWithOnlyOneTownHasLength0 ()
+        {
+            var sut = new Walk (new Town ());
+
+            sut.Length.Should ().Be (0);
+        }
+
     }
 }
 
