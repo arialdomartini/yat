@@ -33,12 +33,26 @@ namespace Yat.Tests
                 new Town (x1, y1),
                 new Town (x2, y2)
             };
-
             var sut = new Walk (towns);
 
             sut.Length.Should ().Be (distance);
         }
 
+        [Test]
+        public void AWalkWithSeveralTownsHasLengthEqualToTheSumOfDistances()
+        {
+            var townsInASquare = new List<Town> {
+                new Town(0, 0),
+                new Town(10, 0),
+                new Town(10, 10),
+                new Town(0, 10)
+            };
+            var sut = new Walk (townsInASquare);
+
+            var actual = sut.Length;
+
+            actual.Should ().Be (10 + 10 + 10);
+        }
 
     }
 }

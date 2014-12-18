@@ -24,19 +24,30 @@ namespace Yat
 
         public double Length { 
             get { 
-                if(_towns == null || _towns.Count == 0)
+                if(_towns == null)
                 {
                     return 0;
                 }
                 else
                 {
-                    var town1 = _towns [0];
-                    var town2 = _towns [1];
-                    return Math.Sqrt (Math.Pow (town1.x - town2.x, 2) + Math.Pow (town1.y - town2.y, 2));
+                    double length = 0;
+                    Town previous = null;
+                    foreach (var town in _towns) {
+                        if (previous != null)
+                        {
+                            length += DistanceBetween (previous, town);
+                        }
+                        previous = town;
+                    }
+                    return length;
                 }
             } 
         }
 
+        double DistanceBetween (Town town1, Town town2)
+        {
+            return Math.Sqrt (Math.Pow (town1.x - town2.x, 2) + Math.Pow (town1.y - town2.y, 2));
+        }
     }
 }
 
