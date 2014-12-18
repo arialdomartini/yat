@@ -14,7 +14,7 @@ namespace Yat
             private set;
         }
 
-        public Town (int x, int y)
+        public Town(int x, int y)
         {
             this.x = x;
             this.y = y;
