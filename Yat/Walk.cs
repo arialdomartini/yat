@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Yat
 {
-    public class Walk
+    public class Walk : IComparable<Walk>
     {
         List<Town> _towns;
 
@@ -13,6 +13,15 @@ namespace Yat
             _towns = towns;
         }
 
+        #region IComparable implementation
+
+        public int CompareTo(Walk other)
+        {
+            return Length.CompareTo(other.Length);
+        }
+
+        #endregion
+        
         double CalculateLength(List<Town> towns)
         {
             if (towns.Count == 0)

@@ -54,5 +54,27 @@ namespace Yat.Tests
             actual.Should().Be(10 + 10 + 10);
         }
 
+        [Test]
+        public void WalksAreComparedBasedOnTheirLength()
+        {
+            var shortPath = new List<Town> {
+                new Town(0, 0),
+                new Town(10, 0),
+                new Town(10, 10),
+                new Town(0, 10)
+            };
+            var longPath = new List<Town> {
+                new Town(0, 0),
+                new Town(100, 0),
+                new Town(100, 10),
+                new Town(0, 100)
+            };
+
+            var shortWalk = new Walk(shortPath);
+            var longWalk = new Walk(longPath);
+
+            shortWalk.CompareTo(longWalk).Should().Be(-1);
+        }
+
     }
 }
