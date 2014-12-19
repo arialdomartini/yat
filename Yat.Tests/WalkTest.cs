@@ -78,18 +78,6 @@ namespace Yat.Tests
         }
 
         [Test]
-        public void AWalkCanGenerateAClonedChild()
-        {
-            var towns = Substitute.For<List<Town>>();
-            var sut = new Walk(towns);
-
-            var child = sut.GenerateChild();
-
-            child.Length.Should().Be(sut.Length);
-
-        }
-
-        [Test]
         public void TwoWalkAreCompatibleIfTheyWalksThrouTheSameTowns()
         {
             var town1 = new Town(1, 1);
@@ -154,5 +142,19 @@ namespace Yat.Tests
 
             actual.Should().BeFalse();
         }
+
+        [Test]
+        public void AWalkCanGenerateACompatibleChild()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+
+            var child = sut.GenerateChild();
+
+            sut.IsCompatibleWith(sut).Should().BeTrue();
+        }
+
     }
 }
