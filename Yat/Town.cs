@@ -4,20 +4,20 @@ namespace Yat
 {
     public class Town
     {
-        public int x {
+        public int X {
             get;
             private set;
         }
 
-        public int y {
+        public int Y {
             get;
             private set;
         }
 
         public Town(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
         }
     }
 }

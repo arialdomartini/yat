@@ -39,7 +39,7 @@ namespace Yat
 
         double DistanceBetween(Town town1, Town town2)
         {
-            return Math.Sqrt(Math.Pow(town1.x - town2.x, 2) + Math.Pow(town1.y - town2.y, 2));
+            return Math.Sqrt(Math.Pow(town1.X - town2.X, 2) + Math.Pow(town1.Y - town2.Y, 2));
         }
 
         public Walk GenerateChild()
