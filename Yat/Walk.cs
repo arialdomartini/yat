@@ -28,7 +28,7 @@ namespace Yat
             {
                 return 0;
             }
-            return Enumerable.Range(0, towns.Count - 1).Select(i => DistanceBetween(towns[i], towns[i + 1])).Sum();
+            return Enumerable.Range(0, towns.Count - 1).Sum(i => DistanceBetween(towns[i], towns[i + 1]));
         }
 
         public double Length { 
