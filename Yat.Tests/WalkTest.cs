@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using NSubstitute;
 
 namespace Yat.Tests
 {
@@ -76,5 +77,16 @@ namespace Yat.Tests
             shortWalk.CompareTo(longWalk).Should().Be(-1);
         }
 
+        [Test]
+        public void AWalkCanGenerateAClonedChild()
+        {
+            var towns = Substitute.For<List<Town>>();
+            var sut = new Walk(towns);
+
+            var child = sut.GenerateChild();
+
+            child.Length.Should().Be(sut.Length);
+
+        }
     }
 }

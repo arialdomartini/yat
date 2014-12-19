@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting;
 
 namespace Yat
 {
@@ -40,6 +41,11 @@ namespace Yat
         double DistanceBetween(Town town1, Town town2)
         {
             return Math.Sqrt(Math.Pow(town1.x - town2.x, 2) + Math.Pow(town1.y - town2.y, 2));
+        }
+
+        public Walk GenerateChild()
+        {
+            return new Walk(_towns);
         }
     }
 }
