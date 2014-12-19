@@ -88,5 +88,71 @@ namespace Yat.Tests
             child.Length.Should().Be(sut.Length);
 
         }
+
+        [Test]
+        public void TwoWalkAreCompatibleIfTheyWalksThrouTheSameTowns()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var sut = new Walk(new List<Town> { town1, town2 });
+            var other = new Walk(new List<Town> { town1, town2 });
+
+            sut.IsCompatibleWith(other).Should().BeTrue();
+        }
+
+        [Test]
+        public void ContainsIsTrueWhenGivenTheSameExactList()
+        {
+            var towns = new List<Town> {
+                new Town(1, 1),
+                new Town(2, 2)
+            };
+            var sut = new Walk(towns);
+
+            sut.Contains(towns).Should().BeTrue();
+        }
+
+        [Test]
+        public void AWalkContainsAListOfTownsEvenIfGivenInDifferentOrder()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sameTownsInAnotherOrder = new List<Town> {town1, town3, town2};
+
+            var actual = sut.Contains(sameTownsInAnotherOrder);
+
+            actual.Should().BeTrue();
+        }
+
+        [Test]
+        public void AWalkDoesNotContainAListOfTownsIfTheListsHasOneMore()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var town4 = new Town(4, 4);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sameTownsInAnotherOrder = new List<Town> {town1, town2, town3, town4};
+
+            var actual = sut.Contains(sameTownsInAnotherOrder);
+
+            actual.Should().BeFalse();
+        }
+
+        [Test]
+        public void AWalkDoesNotContainAListOfTownsIfTheListLacksOne()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sameTownsInAnotherOrder = new List<Town> {town1, town3};
+
+            var actual = sut.Contains(sameTownsInAnotherOrder);
+
+            actual.Should().BeFalse();
+        }
     }
 }

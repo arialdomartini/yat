@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting;
+using System.Globalization;
 
 namespace Yat
 {
@@ -46,6 +47,17 @@ namespace Yat
         public Walk GenerateChild()
         {
             return new Walk(_towns);
+        }
+
+        public bool Contains(List<Town> theirTowns)
+        {
+            var myTowns = _towns;
+            return myTowns.All(myTown => theirTowns.Contains(myTown)) && theirTowns.All(theirTown => myTowns.Contains(theirTown));
+        }
+
+        public bool IsCompatibleWith(Walk other)
+        {
+            return other.Contains(_towns);
         }
     }
 }
