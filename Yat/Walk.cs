@@ -31,7 +31,8 @@ namespace Yat
             return Enumerable.Range(0, towns.Count - 1).Sum(i => DistanceBetween(towns[i], towns[i + 1]));
         }
 
-        public double Length { 
+        public double Length
+        {
             get { 
                 return CalculateLength(_towns);
             } 
@@ -67,11 +68,14 @@ namespace Yat
 
         public bool ContainsExactly(List<Town> theirTowns)
         {
-            if( theirTowns.Count != _towns.Count) {
+            if( theirTowns.Count != _towns.Count)
+            {
                 return false;
             }
-            for (int i = 0; i < _towns.Count; i++) {
-                if( _towns[i] != theirTowns[i]) {
+            for (int i = 0; i < _towns.Count; i++)
+            {
+                if( _towns[i] != theirTowns[i])
+                {
                     return false;
                 }
             }
