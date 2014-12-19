@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using NSubstitute;
 
 namespace Yat.Tests
 {
@@ -183,7 +184,7 @@ namespace Yat.Tests
         }
 
         [Test]
-        public void AWalkGeneratesChildrenThatAreClones()
+        public void AWalkGeneratesChildrenThatAreNotClones()
         {
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
@@ -192,7 +193,7 @@ namespace Yat.Tests
 
             var child = sut.GenerateChild();
 
-            child.IsACloneOf(sut).Should().BeTrue();
+            child.IsACloneOf(sut).Should().BeFalse();
         }
     }
 }
