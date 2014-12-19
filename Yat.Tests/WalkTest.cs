@@ -2,7 +2,6 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using NSubstitute;
 
 namespace Yat.Tests
 {
@@ -153,8 +152,47 @@ namespace Yat.Tests
 
             var child = sut.GenerateChild();
 
-            sut.IsCompatibleWith(sut).Should().BeTrue();
+            child.IsCompatibleWith(sut).Should().BeTrue();
         }
 
+        [Test]
+        public void AWalkIsACloneOfAnotherWalkIfItContainsTheSameTownsInTheSameOrder()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var other = new Walk(new List<Town> {town1, town2, town3 });
+
+            var actual = sut.IsACloneOf(other);
+
+            actual.Should().BeTrue();
+        }
+
+        [Test]
+        public void AWalkIsContainsExatclyAListOfTownsfItContainsTheSameTownsInTheSameOrder()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+
+            var actual = sut.ContainsExactly(new List<Town> { town1, town2, town3 });
+
+            actual.Should().BeTrue();
+        }
+
+        [Test]
+        public void AWalkGeneratesChildrenThatAreClones()
+        {
+            var town1 = new Town(1, 1);
+            var town2 = new Town(2, 2);
+            var town3 = new Town(3, 3);
+            var sut = new Walk(new List<Town> {town1, town2, town3 });
+
+            var child = sut.GenerateChild();
+
+            child.IsACloneOf(sut).Should().BeTrue();
+        }
     }
 }

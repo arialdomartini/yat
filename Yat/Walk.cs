@@ -59,6 +59,26 @@ namespace Yat
         {
             return other.Contains(_towns);
         }
+
+
+        public bool IsACloneOf(Walk other)
+        {
+            return other.ContainsExactly(_towns);
+        }
+
+
+        public bool ContainsExactly(List<Town> theirTowns)
+        {
+            if( theirTowns.Count != _towns.Count) {
+                return false;
+            }
+            for (int i = 0; i < _towns.Count; i++) {
+                if( _towns[i] != theirTowns[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
