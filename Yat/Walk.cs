@@ -6,7 +6,7 @@ namespace Yat
 {
     public class Walk : IComparable<Walk>
     {
-        List<Town> _towns;
+        readonly List<Town> _towns;
 
         public Walk(List<Town> towns)
         {
@@ -22,7 +22,7 @@ namespace Yat
 
         #endregion
         
-        double CalculateLength(List<Town> towns)
+        double CalculateLength(IList<Town> towns)
         {
             if (towns.Count == 0)
             {
