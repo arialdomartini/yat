@@ -50,7 +50,7 @@ namespace Yat
         public bool Contains(List<Town> theirTowns)
         {
             var myTowns = _towns;
-            return myTowns.All(myTown => theirTowns.Contains(myTown)) && theirTowns.All(theirTown => myTowns.Contains(theirTown));
+            return myTowns.All(theirTowns.Contains) && theirTowns.All(myTowns.Contains);
         }
 
         public bool IsCompatibleWith(Walk other)
