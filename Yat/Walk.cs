@@ -7,10 +7,12 @@ namespace Yat
     public class Walk : IComparable<Walk>
     {
         readonly List<Town> _towns;
+        Random _random;
 
         public Walk(List<Town> towns)
         {
             _towns = towns;
+            _random = new Random();
         }
 
         #region IComparable implementation
@@ -45,10 +47,17 @@ namespace Yat
 
         public Walk GenerateChild()
         {
-            var newList = new List<Town>();
-            newList.InsertRange(0, _towns);
-            newList.Insert(newList.Count, newList[0]);
-            newList.RemoveAt(0);
+            var newList = new List<Town>(_towns);
+
+            var index1 = _random.Next(0, _towns.Count);
+            var t1 = newList[index1];
+
+            var index2 = _random.Next(0, _towns.Count);
+            var t2 = newList[index2];
+
+            newList[index1] = t2;
+            newList[index2] = t1;
+
             return new Walk(newList);
         }
 

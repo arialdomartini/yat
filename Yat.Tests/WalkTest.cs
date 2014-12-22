@@ -3,6 +3,9 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using NSubstitute;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Yat.Tests
 {
@@ -194,6 +197,48 @@ namespace Yat.Tests
             var child = sut.GenerateChild();
 
             child.IsACloneOf(sut).Should().BeFalse();
+        }
+
+        [Test]
+        public void ChildrenAreMostlyRandom()
+        {
+            var towns = GenerateTowns(200);
+            var walk = new Walk(towns);
+
+            var children = GenerateChildren(walk, 50);
+
+            var countClones = CountClonesIn(children);
+
+            countClones.Should().BeLessThan(10);
+
+        }
+
+        static int CountClonesIn(List<Walk> children)
+        {
+            int countClones = 0;
+            foreach (var child in children) {
+                if (children.Any(c => c.IsACloneOf(child) && c != child)) {
+                    countClones++;
+                }
+            }
+            return countClones;
+        }
+
+        List<Town> GenerateTowns(int count)
+        {
+            return GenerateItems(count, () => new Town(0, 0));
+        }
+
+        List<Walk> GenerateChildren(Walk walk, int count)
+        {
+            return GenerateItems(count, () => walk.GenerateChild());
+        }
+
+        List<T> GenerateItems<T>(int count, Func<T> func)
+        {
+            var items = new List<T>();
+            Enumerable.Range(1, count).ToList().ForEach(i => items.Add(func()));
+            return items;
         }
     }
 }
