@@ -47,18 +47,26 @@ namespace Yat
 
         public Walk GenerateChild()
         {
-            var newList = new List<Town>(_towns);
-
-            var index1 = _random.Next(0, _towns.Count);
-            var t1 = newList[index1];
-
-            var index2 = _random.Next(0, _towns.Count);
-            var t2 = newList[index2];
-
-            newList[index1] = t2;
-            newList[index2] = t1;
+            var newList = Mutate(_towns);
 
             return new Walk(newList);
+        }
+
+        public static void SwapItems(List<Town> newList, int index1, int index2)
+        {
+            var t1 = newList[index1];
+            var t2 = newList[index2];
+            newList[index1] = t2;
+            newList[index2] = t1;
+        }
+
+        List<Town> Mutate(List<Town> towns)
+        {
+            var newList = new List<Town>(towns);
+            var index1 = _random.Next(0, _towns.Count);
+            var index2 = _random.Next(0, _towns.Count);
+            SwapItems(newList, index1, index2);
+            return newList;
         }
 
         public bool Contains(List<Town> theirTowns)

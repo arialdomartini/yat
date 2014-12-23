@@ -213,6 +213,21 @@ namespace Yat.Tests
 
         }
 
+        [Test]
+        public void SwapItemsShouldInvertThePositionsOf2ItemsInAList()
+        {
+            var town0 = new Town(1, 0);
+            var town1 = new Town(2, 0);
+            var town2 = new Town(3, 0);
+            var town3 = new Town(4, 0);
+            var towns = new List<Town>() { town0, town1, town2, town3 };
+
+            Walk.SwapItems(towns, 0, 1);
+
+            towns[0].Should().Be(town1);
+            towns[1].Should().Be(town0);
+        }
+
         static int CountClonesIn(List<Walk> children)
         {
             int countClones = 0;
