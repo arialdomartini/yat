@@ -47,9 +47,7 @@ namespace Yat
 
         public Walk GenerateChild()
         {
-            var newList = Mutate(_towns);
-
-            return new Walk(newList);
+            return new Walk(Mutate(_towns));
         }
 
         public static void SwapItems(List<Town> newList, int index1, int index2)
@@ -64,7 +62,10 @@ namespace Yat
         {
             var newList = new List<Town>(towns);
             var index1 = _random.Next(0, _towns.Count);
-            var index2 = _random.Next(0, _towns.Count);
+            var index2 = index1;
+            while (index2 == index1) {
+                index2 = _random.Next(0, _towns.Count);
+            }
             SwapItems(newList, index1, index2);
             return newList;
         }

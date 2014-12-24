@@ -194,9 +194,9 @@ namespace Yat.Tests
             var town3 = new Town(3, 3);
             var sut = new Walk(new List<Town> {town1, town2, town3 });
 
-            var child = sut.GenerateChild();
+            var children = GenerateChildren(sut, 100);
 
-            child.IsACloneOf(sut).Should().BeFalse();
+            children.ForEach(c => c.IsACloneOf(sut).Should().BeFalse());
         }
 
         [Test]
