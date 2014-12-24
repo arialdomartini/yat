@@ -61,11 +61,11 @@ namespace Yat
         List<Town> Mutate(List<Town> towns)
         {
             var newList = new List<Town>(towns);
-            var index1 = _random.Next(0, _towns.Count);
-            var index2 = index1;
-            while (index2 == index1) {
-                index2 = _random.Next(0, _towns.Count);
-            }
+            var randomNumbers = Enumerable.Range(0, towns.Count-1).OrderBy(x => _random.Next()).ToArray();
+
+            var index1 = randomNumbers[0];
+            var index2 = randomNumbers[1];
+
             SwapItems(newList, index1, index2);
             return newList;
         }
