@@ -35,6 +35,7 @@
     <Compile Include="Walk.cs" />
     <Compile Include="Town.cs" />
     <Compile Include="Memoizator.cs" />
+    <Compile Include="RandomNumberGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

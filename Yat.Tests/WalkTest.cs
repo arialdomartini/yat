@@ -12,10 +12,18 @@ namespace Yat.Tests
     [TestFixture()]
     public class WalkTest
     {
+        RandomNumberGenerator _randomNumberGenerator;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _randomNumberGenerator = new RandomNumberGenerator();
+        }
+
         [Test()]
         public void AWalkWithNoTownsHasLength0()
         {
-            var sut = new Walk(new List<Town>());
+            var sut = new Walk(_randomNumberGenerator, new List<Town>());
 
             sut.Length.Should().Be(0);
         }
@@ -23,7 +31,7 @@ namespace Yat.Tests
         [Test()]
         public void AWalkWithOnlyOneTownHasLength0()
         {
-            var sut = new Walk(new List<Town> { new Town(10, 20) });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> { new Town(10, 20) });
 
             sut.Length.Should().Be(0);
         }
@@ -37,7 +45,7 @@ namespace Yat.Tests
                 new Town(x1, y1),
                 new Town(x2, y2)
             };
-            var sut = new Walk(towns);
+            var sut = new Walk(_randomNumberGenerator, towns);
 
             sut.Length.Should().Be(distance);
         }
@@ -51,7 +59,7 @@ namespace Yat.Tests
                 new Town(10, 10),
                 new Town(0, 10)
             };
-            var sut = new Walk(townsInASquare);
+            var sut = new Walk(_randomNumberGenerator, townsInASquare);
 
             var actual = sut.Length;
 
@@ -74,8 +82,8 @@ namespace Yat.Tests
                 new Town(0, 100)
             };
 
-            var shortWalk = new Walk(shortPath);
-            var longWalk = new Walk(longPath);
+            var shortWalk = new Walk(_randomNumberGenerator, shortPath);
+            var longWalk = new Walk(_randomNumberGenerator, longPath);
 
             shortWalk.CompareTo(longWalk).Should().Be(-1);
         }
@@ -85,8 +93,8 @@ namespace Yat.Tests
         {
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
-            var sut = new Walk(new List<Town> { town1, town2 });
-            var other = new Walk(new List<Town> { town1, town2 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> { town1, town2 });
+            var other = new Walk(_randomNumberGenerator, new List<Town> { town1, town2 });
 
             sut.IsCompatibleWith(other).Should().BeTrue();
         }
@@ -98,7 +106,7 @@ namespace Yat.Tests
                 new Town(1, 1),
                 new Town(2, 2)
             };
-            var sut = new Walk(towns);
+            var sut = new Walk(_randomNumberGenerator, towns);
 
             sut.Contains(towns).Should().BeTrue();
         }
@@ -109,7 +117,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
             var sameTownsInAnotherOrder = new List<Town> {town1, town3, town2};
 
             var actual = sut.Contains(sameTownsInAnotherOrder);
@@ -124,7 +132,7 @@ namespace Yat.Tests
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
             var town4 = new Town(4, 4);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
             var sameTownsInAnotherOrder = new List<Town> {town1, town2, town3, town4};
 
             var actual = sut.Contains(sameTownsInAnotherOrder);
@@ -138,7 +146,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
             var sameTownsInAnotherOrder = new List<Town> {town1, town3};
 
             var actual = sut.Contains(sameTownsInAnotherOrder);
@@ -152,7 +160,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
 
             var child = sut.GenerateChild();
 
@@ -165,8 +173,8 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
-            var other = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var other = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
 
             var actual = sut.IsACloneOf(other);
 
@@ -179,7 +187,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
 
             var actual = sut.ContainsExactly(new List<Town> { town1, town2, town3 });
 
@@ -192,7 +200,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(new List<Town> {town1, town2, town3 });
+            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
 
             var children = GenerateChildren(sut, 100);
 
@@ -203,7 +211,7 @@ namespace Yat.Tests
         public void ChildrenAreMostlyRandom()
         {
             var towns = GenerateTowns(200);
-            var walk = new Walk(towns);
+            var walk = new Walk(_randomNumberGenerator, towns);
 
             var children = GenerateChildren(walk, 50);
 

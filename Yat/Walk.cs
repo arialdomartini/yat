@@ -7,12 +7,12 @@ namespace Yat
     public class Walk : IComparable<Walk>
     {
         readonly List<Town> _towns;
-        Random _random;
+        RandomNumberGenerator _randomNumberGenerator;
 
-        public Walk(List<Town> towns)
+        public Walk(RandomNumberGenerator randomNumberGenerator, List<Town> towns)
         {
+            _randomNumberGenerator = randomNumberGenerator;
             _towns = towns;
-            _random = new Random();
         }
 
         #region IComparable implementation
@@ -47,7 +47,7 @@ namespace Yat
 
         public Walk GenerateChild()
         {
-            return new Walk(Mutate(_towns));
+            return new Walk(_randomNumberGenerator, Mutate(_towns));
         }
 
         public static void SwapItems(List<Town> newList, int index1, int index2)
@@ -61,7 +61,7 @@ namespace Yat
         List<Town> Mutate(List<Town> towns)
         {
             var newList = new List<Town>(towns);
-            var randomNumbers = Enumerable.Range(0, towns.Count-1).OrderBy(x => _random.Next()).ToArray();
+            var randomNumbers = _randomNumberGenerator.GenerateCouple(0, _towns.Count);
 
             var index1 = randomNumbers[0];
             var index2 = randomNumbers[1];
