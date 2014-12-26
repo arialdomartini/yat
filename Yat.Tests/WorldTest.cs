@@ -42,7 +42,7 @@ namespace Yat.Tests
         }
 
         [Test]
-        public void WorldShouldRememberItsWalks()
+        public void ShouldRememberItsWalks()
         {
             var towns = GenerateNTowns(3);
 
@@ -52,7 +52,7 @@ namespace Yat.Tests
         }
 
         [Test]
-        public void ItShouldReturnsTheWalksOrderedByLength()
+        public void ShouldReturnTheWalksOrderedByLength()
         {
             var towns = GenerateNTowns(5);
             _sut.GenerateRandomWalks(towns, 5);
@@ -68,8 +68,6 @@ namespace Yat.Tests
                 }
                 prev = walk;
             }
-
-
         }
 
         List<Town> GenerateNTowns(int n)
