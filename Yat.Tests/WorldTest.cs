@@ -9,29 +9,33 @@ namespace Yat.Tests
     public class WorldTest
     {
         RandomNumberGenerator _randomNumberGenerator;
+        World _sut;
 
         [SetUp]
         public void SetUp()
         {
             _randomNumberGenerator = new RandomNumberGenerator();
+            _sut = new World(_randomNumberGenerator);
         }
 
         [Test]
         public void ShouldGenerateARandomWalk()
         {
+            var towns = GenerateNTowns(15);
+
+            var actual = _sut.GenerateRandomWalk(towns);
+
+            actual.Contains(towns).Should().BeTrue();
+            actual.ContainsExactly(towns).Should().BeFalse();
+        }
+
+        List<Town> GenerateNTowns(int n)
+        {
             var towns = new List<Town>();
-            for(var i=0; i< 100; i++)
-            {
+            for (var i = 0; i < n; i++) {
                 towns.Add(new Town(i, i));
             }
-            var walk = new Walk(_randomNumberGenerator, towns);
-            var sut = new World(_randomNumberGenerator);
-
-            var actual = sut.GenerateRandomWalk(towns);
-
-            actual.IsCompatibleWith(walk).Should().BeTrue();
-            actual.IsACloneOf(walk).Should().BeFalse();
-
+            return towns;
         }
     }
 }

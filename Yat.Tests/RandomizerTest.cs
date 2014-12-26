@@ -21,10 +21,11 @@ namespace Yat.Tests
             {
                 var couple = sut.GenerateCouple(0, 100);
                 firstNumbers.Add(couple[0]);
-                firstNumbers.Add(couple[1]);
+                secondNumbers.Add(couple[1]);
             }
 
-            StandardDeviation(firstNumbers).Should().BeGreaterThan(2);
+            StandardDeviation(firstNumbers).Should().BeGreaterThan(20);
+            StandardDeviation(secondNumbers).Should().BeGreaterThan(20);
         }
 
         [Test]

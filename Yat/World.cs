@@ -6,7 +6,7 @@ namespace Yat
 {
     public class World
     {
-        RandomNumberGenerator _randomNumberGenerator;
+        readonly RandomNumberGenerator _randomNumberGenerator;
 
         public World(RandomNumberGenerator randomNumberGenerator)
         {
@@ -16,6 +16,11 @@ namespace Yat
         public Walk GenerateRandomWalk(List<Town> towns)
         {
             return new Walk(_randomNumberGenerator, towns.OrderBy(i => Guid.NewGuid()).ToList());
+        }
+
+        public List<Walk> GenerateRandomWalks(List<Town> towns, int i)
+        {
+            throw new NotImplementedException();
         }
     }
 }
