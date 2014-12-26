@@ -11,6 +11,10 @@ namespace Yat
             private set;
         }
 
+        public IEnumerable<Walk> WalksOrderedByLength {
+            get { return Walks.OrderBy(w => w.Length); }
+        }
+
         readonly RandomNumberGenerator _randomNumberGenerator;
 
         public World(RandomNumberGenerator randomNumberGenerator)

@@ -51,6 +51,27 @@ namespace Yat.Tests
             actual.Should().BeSameAs(_sut.Walks);
         }
 
+        [Test]
+        public void ItShouldReturnsTheWalksOrderedByLength()
+        {
+            var towns = GenerateNTowns(5);
+            _sut.GenerateRandomWalks(towns, 5);
+
+            var walks = _sut.WalksOrderedByLength;
+
+            Walk prev = null;
+            foreach(var walk in walks)
+            {
+                if(prev != null)
+                {
+                    walk.Length.Should().BeGreaterOrEqualTo(prev.Length);
+                }
+                prev = walk;
+            }
+
+
+        }
+
         List<Town> GenerateNTowns(int n)
         {
             var towns = new List<Town>();
