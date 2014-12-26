@@ -6,6 +6,11 @@ namespace Yat
 {
     public class World
     {
+        public IEnumerable<Walk> Walks {
+            get;
+            private set;
+        }
+
         readonly RandomNumberGenerator _randomNumberGenerator;
 
         public World(RandomNumberGenerator randomNumberGenerator)
@@ -20,8 +25,9 @@ namespace Yat
 
         public IEnumerable<Walk> GenerateRandomWalks(List<Town> towns, int numberOfWalks)
         {
-            return from n in Enumerable.Range(1, numberOfWalks)
+            Walks = from n in Enumerable.Range(1, numberOfWalks)
                 select GenerateRandomWalk(towns);
+            return Walks;
         }
     }
 }

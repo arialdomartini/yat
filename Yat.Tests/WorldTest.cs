@@ -41,6 +41,16 @@ namespace Yat.Tests
             actual.ForEach(w => w.Contains(towns));
         }
 
+        [Test]
+        public void WorldShouldRememberItsWalks()
+        {
+            var towns = GenerateNTowns(3);
+
+            var actual = _sut.GenerateRandomWalks(towns, 4);
+
+            actual.Should().BeSameAs(_sut.Walks);
+        }
+
         List<Town> GenerateNTowns(int n)
         {
             var towns = new List<Town>();
