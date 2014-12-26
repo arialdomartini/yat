@@ -29,6 +29,17 @@ namespace Yat.Tests
             actual.ContainsExactly(towns).Should().BeFalse();
         }
 
+        [Test]
+        public void ShouldGenerateNWalks()
+        {
+            var towns = GenerateNTowns(20);
+
+            var actual = _sut.GenerateRandomWalks(towns, 100);
+
+            actual.Count.Should().Be(100);
+            actual.ForEach(w => w.Contains(towns));
+        }
+
         List<Town> GenerateNTowns(int n)
         {
             var towns = new List<Town>();
