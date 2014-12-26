@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using FluentAssertions;
+using System.Linq;
 
 namespace Yat.Tests
 {
@@ -34,7 +35,7 @@ namespace Yat.Tests
         {
             var towns = GenerateNTowns(20);
 
-            var actual = _sut.GenerateRandomWalks(towns, 100);
+            var actual = _sut.GenerateRandomWalks(towns, 100).ToList();
 
             actual.Count.Should().Be(100);
             actual.ForEach(w => w.Contains(towns));
