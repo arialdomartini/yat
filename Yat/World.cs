@@ -33,6 +33,11 @@ namespace Yat
                 select GenerateRandomWalk(towns);
             return Walks;
         }
+
+        public void Kill(int numberOfWalksToKill)
+        {
+            Walks = Walks.Skip(numberOfWalksToKill);
+        }
     }
 }
 

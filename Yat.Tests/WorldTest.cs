@@ -70,6 +70,19 @@ namespace Yat.Tests
             }
         }
 
+        [Test]
+        public void ShouldBeAbleToKillNWalks()
+        {
+            var towns = GenerateNTowns(5);
+            _sut.GenerateRandomWalks(towns, 5);
+
+            _sut.Kill(3);
+
+            var walks = _sut.WalksOrderedByLength;
+            walks.Count().Should().Be(5-3);
+
+        }
+
         List<Town> GenerateNTowns(int n)
         {
             var towns = new List<Town>();
