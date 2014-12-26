@@ -80,8 +80,26 @@ namespace Yat.Tests
 
             var walks = _sut.WalksOrderedByLength;
             walks.Count().Should().Be(5-3);
+        }
+
+        [Test]
+        public void TheShortestWalksSurvive()
+        {
+            var towns = GenerateNTowns(5);
+            var walks = _sut.GenerateRandomWalks(towns, 10);
+            var shortest = walks.OrderBy(w => w.Length).Take(3).ToList();
+
+            _sut.Kill(7);
+
+            var survivors = _sut.Walks.ToList();
+
+            survivors.Count().Should().Be(3);
+            survivors.Contains(shortest[0]);
+            survivors.Contains(shortest[1]);
+            survivors.Contains(shortest[2]);
 
         }
+
 
         List<Town> GenerateNTowns(int n)
         {
