@@ -48,7 +48,6 @@
     <Compile Include="WalkTest.cs" />
     <Compile Include="MemoizationTest.cs" />
     <Compile Include="RandomizerTest.cs" />
-    <Compile Include="WorldTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

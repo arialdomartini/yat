@@ -13,27 +13,29 @@ namespace Yat.Tests
     public class WalkTest
     {
         RandomNumberGenerator _randomNumberGenerator;
+        Walk _sut;
 
         [SetUp]
         public void SetUp()
         {
             _randomNumberGenerator = new RandomNumberGenerator();
+            _sut = new Walk(_randomNumberGenerator);
         }
 
         [Test()]
         public void AWalkWithNoTownsHasLength0()
         {
-            var sut = new Walk(_randomNumberGenerator, new List<Town>());
-
-            sut.Length.Should().Be(0);
+            _sut.CalculateLength(new List<Town>()).Should().Be(0);
         }
 
         [Test()]
         public void AWalkWithOnlyOneTownHasLength0()
         {
-            var sut = new Walk(_randomNumberGenerator, new List<Town> { new Town(10, 20) });
+            var towns = new List<Town> {
+                new Town(10, 20)
+            };
 
-            sut.Length.Should().Be(0);
+            _sut.CalculateLength(towns).Should().Be(0);
         }
 
         [TestCase(0, 0, 0, 0, 0)]
@@ -45,9 +47,8 @@ namespace Yat.Tests
                 new Town(x1, y1),
                 new Town(x2, y2)
             };
-            var sut = new Walk(_randomNumberGenerator, towns);
 
-            sut.Length.Should().Be(distance);
+            _sut.CalculateLength(towns).Should().Be(distance);
         }
 
         [Test]
@@ -59,9 +60,8 @@ namespace Yat.Tests
                 new Town(10, 10),
                 new Town(0, 10)
             };
-            var sut = new Walk(_randomNumberGenerator, townsInASquare);
 
-            var actual = sut.Length;
+            var actual = _sut.CalculateLength(townsInASquare);
 
             actual.Should().Be(10 + 10 + 10);
         }
@@ -82,10 +82,7 @@ namespace Yat.Tests
                 new Town(0, 100)
             };
 
-            var shortWalk = new Walk(_randomNumberGenerator, shortPath);
-            var longWalk = new Walk(_randomNumberGenerator, longPath);
-
-            shortWalk.CompareTo(longWalk).Should().Be(-1);
+            _sut.ComparePaths(shortPath, longPath).Should().Be(-1);
         }
 
         [Test]
@@ -93,10 +90,10 @@ namespace Yat.Tests
         {
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> { town1, town2 });
-            var other = new Walk(_randomNumberGenerator, new List<Town> { town1, town2 });
-
-            sut.IsCompatibleWith(other).Should().BeTrue();
+            var path1 = new List<Town> { town1, town2 };
+            var path2 = new List<Town> { town1, town2 };
+            
+            _sut.AreCompatible(path1, path2).Should().BeTrue();
         }
 
         [Test]
@@ -106,9 +103,8 @@ namespace Yat.Tests
                 new Town(1, 1),
                 new Town(2, 2)
             };
-            var sut = new Walk(_randomNumberGenerator, towns);
 
-            sut.Contains(towns).Should().BeTrue();
+            _sut.ContainsTheSameTowns(towns, towns).Should().BeTrue();
         }
 
         [Test]
@@ -117,10 +113,10 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town3, town2};
 
-            var actual = sut.Contains(sameTownsInAnotherOrder);
+            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeTrue();
         }
@@ -132,10 +128,10 @@ namespace Yat.Tests
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
             var town4 = new Town(4, 4);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town2, town3, town4};
 
-            var actual = sut.Contains(sameTownsInAnotherOrder);
+            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeFalse();
         }
@@ -146,10 +142,10 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town3};
 
-            var actual = sut.Contains(sameTownsInAnotherOrder);
+            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeFalse();
         }
@@ -160,11 +156,11 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
 
-            var child = sut.GenerateChild();
+            var child = _sut.GenerateChild(path1);
 
-            child.IsCompatibleWith(sut).Should().BeTrue();
+            _sut.AreCompatible(child, path1).Should().BeTrue();
         }
 
         [Test]
@@ -173,10 +169,10 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
-            var other = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
+            var path2 = new List<Town> { town1, town2, town3 };
 
-            var actual = sut.IsACloneOf(other);
+            var actual = _sut.AreClones(path1, path2);
 
             actual.Should().BeTrue();
         }
@@ -187,9 +183,10 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path1 = new List<Town> { town1, town2, town3 };
+            var path2 = new List<Town> { town1, town2, town3 };
 
-            var actual = sut.ContainsExactly(new List<Town> { town1, town2, town3 });
+            var actual = _sut.ContainsExactly(path1, path2);
 
             actual.Should().BeTrue();
         }
@@ -197,28 +194,22 @@ namespace Yat.Tests
         [Test]
         public void AWalkGeneratesChildrenThatAreNotClones()
         {
-            var town1 = new Town(1, 1);
-            var town2 = new Town(2, 2);
-            var town3 = new Town(3, 3);
-            var sut = new Walk(_randomNumberGenerator, new List<Town> {town1, town2, town3 });
+            var path = GenerateTowns(3);
 
-            var children = GenerateChildren(sut, 100);
+            var children = GenerateChildren(path, 100);
 
-            children.ForEach(c => c.IsACloneOf(sut).Should().BeFalse());
+            children.ForEach(c => _sut.AreClones(c, path).Should().BeFalse());
         }
 
         [Test]
         public void ChildrenAreMostlyRandom()
         {
             var towns = GenerateTowns(200);
-            var walk = new Walk(_randomNumberGenerator, towns);
 
-            var children = GenerateChildren(walk, 50);
+            var children = GenerateChildren(towns, 50);
 
             var countClones = CountClonesIn(children);
-
             countClones.Should().BeLessThan(10);
-
         }
 
         [Test]
@@ -230,17 +221,17 @@ namespace Yat.Tests
             var town3 = new Town(4, 0);
             var towns = new List<Town>() { town0, town1, town2, town3 };
 
-            Walk.SwapItems(towns, 0, 1);
+            var actual = _sut.SwapItemsNewList(towns, 0, 1);
 
-            towns[0].Should().Be(town1);
-            towns[1].Should().Be(town0);
+            actual[0].Should().Be(town1);
+            actual[1].Should().Be(town0);
         }
 
-        static int CountClonesIn(List<Walk> children)
+        int CountClonesIn(List<List<Town>> children)
         {
             int countClones = 0;
             foreach (var child in children) {
-                if (children.Any(c => c.IsACloneOf(child) && c != child)) {
+                if (children.Any(c => _sut.AreClones(child, c) && c != child)) {
                     countClones++;
                 }
             }
@@ -252,10 +243,12 @@ namespace Yat.Tests
             return GenerateItems(count, () => new Town(0, 0));
         }
 
-        List<Walk> GenerateChildren(Walk walk, int count)
+        List<List<Town>> GenerateChildren(List<Town> path, int count)
         {
-            return GenerateItems(count, () => walk.GenerateChild());
+            return GenerateItems(count, () => _sut.GenerateChild(path));
         }
+
+
 
         List<T> GenerateItems<T>(int count, Func<T> func)
         {
