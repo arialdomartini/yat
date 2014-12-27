@@ -227,6 +227,22 @@ namespace Yat.Tests
             actual[1].Should().Be(town0);
         }
 
+        [Test]
+        public void ShouldGenerteACompletelyShuffledPath()
+        {
+            var towns = new List<Town>();
+            for(var i=0; i< 100; i++)
+            {
+                towns.Add(new Town(i, i));
+            }
+
+            var actual = _sut.GenerateRandom(towns);
+
+            _sut.AreCompatible(actual, towns).Should().BeTrue();
+            _sut.AreClones(actual, towns).Should().BeFalse();
+
+        }
+
         int CountClonesIn(List<List<Town>> children)
         {
             int countClones = 0;

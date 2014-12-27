@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 
 namespace Yat
 {
@@ -19,13 +18,13 @@ namespace Yat
             return CalculateLength(firstPath).CompareTo(CalculateLength(secondPath));
         }
         
-        public double CalculateLength(IList<Town> towns)
+        public double CalculateLength(IList<Town> path)
         {
-            if (towns.Count == 0)
+            if (path.Count == 0)
             {
                 return 0;
             }
-            return Enumerable.Range(0, towns.Count - 1).Sum(i => DistanceBetween(towns[i], towns[i + 1]));
+            return Enumerable.Range(0, path.Count - 1).Sum(i => DistanceBetween(path[i], path[i + 1]));
         }
 
         double DistanceBetween(Town town1, Town town2)
@@ -110,6 +109,11 @@ namespace Yat
                 }
             }
             return true;
+        }
+
+        public List<Town> GenerateRandom(List<Town> path)
+        {
+            return path.OrderBy(i => Guid.NewGuid()).ToList();
         }
     }
 }
