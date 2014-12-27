@@ -178,20 +178,6 @@ namespace Yat.Tests
         }
 
         [Test]
-        public void AWalkIsContainsExatclyAListOfTownsfItContainsTheSameTownsInTheSameOrder()
-        {
-            var town1 = new Town(1, 1);
-            var town2 = new Town(2, 2);
-            var town3 = new Town(3, 3);
-            var path1 = new List<Town> { town1, town2, town3 };
-            var path2 = new List<Town> { town1, town2, town3 };
-
-            var actual = _sut.ContainsExactly(path1, path2);
-
-            actual.Should().BeTrue();
-        }
-
-        [Test]
         public void AWalkGeneratesChildrenThatAreNotClones()
         {
             var path = GenerateTowns(3);

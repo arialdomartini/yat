@@ -95,22 +95,6 @@ namespace Yat
             return true;
         }
 
-        public bool ContainsExactly(List<Town> path1, List<Town> path2)
-        {
-            if( path1.Count != path2.Count)
-            {
-                return false;
-            }
-            for (int i = 0; i < path1.Count; i++)
-            {
-                if( path1[i] != path2[i])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public List<Town> GenerateRandom(List<Town> path)
         {
             return path.OrderBy(i => Guid.NewGuid()).ToList();
