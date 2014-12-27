@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 namespace Yat
 {
@@ -100,14 +101,10 @@ namespace Yat
             return path.OrderBy(i => Guid.NewGuid()).ToList();
         }
 
-        public List<List<Town>> GeneratePopulation(List<Town> towns, int population)
+        public IEnumerable<List<Town>> GeneratePopulation(List<Town> towns, int population)
         {
-            var paths = new List<List<Town>>();
-            for(int i=0; i<population; i++)
-            {
-                paths.Add(GenerateRandom(towns));
-            }
-            return paths;
+            return from i in Enumerable.Range(1, population)
+                             select GenerateRandom(towns);
         }
     }
 }

@@ -233,7 +233,7 @@ namespace Yat.Tests
         {
             var towns = GenerateTowns(20);
 
-            var actual = _sut.GeneratePopulation(towns, 100);
+            var actual = _sut.GeneratePopulation(towns, 100).ToList();
 
             actual.Count.Should().Be(100);
             foreach(var path in actual)
