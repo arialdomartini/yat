@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Globalization;
 
 namespace Yat
 {
@@ -38,46 +37,24 @@ namespace Yat
             return Mutate(path);
         }
 
-        public void SwapItems(List<Town> path, int index1, int index2)
-        {
-            var t1 = path[index1];
-            var t2 = path[index2];
-            path[index1] = t2;
-            path[index2] = t1;
-        }
-
-        public List<Town> SwapItemsNewList(List<Town> path, int index1, int index2)
-        {
-            var newPath = new List<Town>(path);
-            var t1 = newPath[index1];
-            var t2 = newPath[index2];
-            newPath[index1] = t2;
-            newPath[index2] = t1;
-
-            return newPath;
-        }
-
         List<Town> Mutate(List<Town> towns)
         {
-            var newList = new List<Town>(towns);
             var randomNumbers = _randomNumberGenerator.GenerateCouple(0, towns.Count);
-
-            var index1 = randomNumbers[0];
-            var index2 = randomNumbers[1];
-
-            SwapItems(newList, index1, index2);
-            return newList;
+            return SwapItems(towns, randomNumbers[0], randomNumbers[1]);
         }
 
-        public bool ContainsTheSameTowns(List<Town> path1, List<Town> path2)
+        public List<Town> SwapItems(List<Town> path, int index1, int index2)
         {
-            return path1.All(path2.Contains) && path2.All(path1.Contains);
+            var newPath = new List<Town>(path);
+            newPath[index1] = path[index2];
+            newPath[index2] = path[index1];
+
+            return newPath;
         }
 
         public bool AreCompatible(List<Town> path1, List<Town> path2)
         {
             return path1.All(path2.Contains) && path2.All(path1.Contains);
-                      
         }
 
         public bool AreClones(List<Town> path1, List<Town> path2)
@@ -86,6 +63,7 @@ namespace Yat
             {
                 return false;
             }
+            
             for (int i = 0; i < path1.Count; i++)
             {
                 if( path1[i] != path2[i])
@@ -108,4 +86,3 @@ namespace Yat
         }
     }
 }
-

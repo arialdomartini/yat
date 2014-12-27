@@ -2,10 +2,7 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using NSubstitute;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Configuration;
 
 namespace Yat.Tests
 {
@@ -104,7 +101,7 @@ namespace Yat.Tests
                 new Town(2, 2)
             };
 
-            _sut.ContainsTheSameTowns(towns, towns).Should().BeTrue();
+            _sut.AreCompatible(towns, towns).Should().BeTrue();
         }
 
         [Test]
@@ -116,7 +113,7 @@ namespace Yat.Tests
             var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town3, town2};
 
-            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
+            var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeTrue();
         }
@@ -131,7 +128,7 @@ namespace Yat.Tests
             var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town2, town3, town4};
 
-            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
+            var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeFalse();
         }
@@ -145,7 +142,7 @@ namespace Yat.Tests
             var path1 = new List<Town> { town1, town2, town3 };
             var sameTownsInAnotherOrder = new List<Town> {town1, town3};
 
-            var actual = _sut.ContainsTheSameTowns(path1, sameTownsInAnotherOrder);
+            var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
             actual.Should().BeFalse();
         }
@@ -207,7 +204,7 @@ namespace Yat.Tests
             var town3 = new Town(4, 0);
             var towns = new List<Town>() { town0, town1, town2, town3 };
 
-            var actual = _sut.SwapItemsNewList(towns, 0, 1);
+            var actual = _sut.SwapItems(towns, 0, 1);
 
             actual[0].Should().Be(town1);
             actual[1].Should().Be(town0);
