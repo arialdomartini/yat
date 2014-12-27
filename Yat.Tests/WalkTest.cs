@@ -226,7 +226,21 @@ namespace Yat.Tests
 
             _sut.AreCompatible(actual, towns).Should().BeTrue();
             _sut.AreClones(actual, towns).Should().BeFalse();
+        }
 
+        [Test]
+        public void ShouldGenerateNPaths()
+        {
+            var towns = GenerateTowns(20);
+
+            var actual = _sut.GeneratePopulation(towns, 100);
+
+            actual.Count.Should().Be(100);
+            foreach(var path in actual)
+            {
+                _sut.AreCompatible(path, towns).Should().BeTrue();
+            }
+            CountClonesIn(actual).Should().BeLessThan(5);
         }
 
         int CountClonesIn(List<List<Town>> children)

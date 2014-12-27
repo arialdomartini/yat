@@ -99,6 +99,16 @@ namespace Yat
         {
             return path.OrderBy(i => Guid.NewGuid()).ToList();
         }
+
+        public List<List<Town>> GeneratePopulation(List<Town> towns, int population)
+        {
+            var paths = new List<List<Town>>();
+            for(int i=0; i<population; i++)
+            {
+                paths.Add(GenerateRandom(towns));
+            }
+            return paths;
+        }
     }
 }
 
