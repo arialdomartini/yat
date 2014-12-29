@@ -22,13 +22,13 @@ namespace Yat.Tests
         [Test()]
         public void AWalkWithNoTownsHasLength0()
         {
-            _sut.CalculateLength(new List<Town>()).Should().Be(0);
+            _sut.CalculateLength(new Path()).Should().Be(0);
         }
 
         [Test()]
         public void AWalkWithOnlyOneTownHasLength0()
         {
-            var towns = new List<Town> {
+            var towns = new Path {
                 new Town(10, 20)
             };
 
@@ -40,7 +40,7 @@ namespace Yat.Tests
         [TestCase(0, 0, 3, 4, 5)]
         public void AWalkWith2TownsHasLengthEqualToTheDistanceBetweenTheTown(int x1, int y1, int x2, int y2, double distance)
         {
-            var towns = new List<Town> {
+            var towns = new Path {
                 new Town(x1, y1),
                 new Town(x2, y2)
             };
@@ -51,7 +51,7 @@ namespace Yat.Tests
         [Test]
         public void AWalkWithSeveralTownsHasLengthEqualToTheSumOfDistances()
         {
-            var townsInASquare = new List<Town> {
+            var townsInASquare = new Path {
                 new Town(0, 0),
                 new Town(10, 0),
                 new Town(10, 10),
@@ -66,13 +66,13 @@ namespace Yat.Tests
         [Test]
         public void WalksAreComparedBasedOnTheirLength()
         {
-            var shortPath = new List<Town> {
+            var shortPath = new Path {
                 new Town(0, 0),
                 new Town(10, 0),
                 new Town(10, 10),
                 new Town(0, 10)
             };
-            var longPath = new List<Town> {
+            var longPath = new Path {
                 new Town(0, 0),
                 new Town(100, 0),
                 new Town(100, 10),
@@ -87,8 +87,8 @@ namespace Yat.Tests
         {
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
-            var path1 = new List<Town> { town1, town2 };
-            var path2 = new List<Town> { town1, town2 };
+            var path1 = new Path { town1, town2 };
+            var path2 = new Path { town1, town2 };
             
             _sut.AreCompatible(path1, path2).Should().BeTrue();
         }
@@ -96,7 +96,7 @@ namespace Yat.Tests
         [Test]
         public void ContainsIsTrueWhenGivenTheSameExactList()
         {
-            var towns = new List<Town> {
+            var towns = new Path {
                 new Town(1, 1),
                 new Town(2, 2)
             };
@@ -110,8 +110,8 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var path1 = new List<Town> { town1, town2, town3 };
-            var sameTownsInAnotherOrder = new List<Town> {town1, town3, town2};
+            var path1 = new Path { town1, town2, town3 };
+            var sameTownsInAnotherOrder = new Path {town1, town3, town2};
 
             var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
@@ -125,8 +125,8 @@ namespace Yat.Tests
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
             var town4 = new Town(4, 4);
-            var path1 = new List<Town> { town1, town2, town3 };
-            var sameTownsInAnotherOrder = new List<Town> {town1, town2, town3, town4};
+            var path1 = new Path { town1, town2, town3 };
+            var sameTownsInAnotherOrder = new Path {town1, town2, town3, town4};
 
             var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
@@ -139,8 +139,8 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var path1 = new List<Town> { town1, town2, town3 };
-            var sameTownsInAnotherOrder = new List<Town> {town1, town3};
+            var path1 = new Path { town1, town2, town3 };
+            var sameTownsInAnotherOrder = new Path {town1, town3};
 
             var actual = _sut.AreCompatible(path1, sameTownsInAnotherOrder);
 
@@ -153,7 +153,7 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var path1 = new List<Town> { town1, town2, town3 };
+            var path1 = new Path { town1, town2, town3 };
 
             var child = _sut.GenerateChild(path1);
 
@@ -166,8 +166,8 @@ namespace Yat.Tests
             var town1 = new Town(1, 1);
             var town2 = new Town(2, 2);
             var town3 = new Town(3, 3);
-            var path1 = new List<Town> { town1, town2, town3 };
-            var path2 = new List<Town> { town1, town2, town3 };
+            var path1 = new Path { town1, town2, town3 };
+            var path2 = new Path { town1, town2, town3 };
 
             var actual = _sut.AreClones(path1, path2);
 
@@ -202,7 +202,7 @@ namespace Yat.Tests
             var town1 = new Town(2, 0);
             var town2 = new Town(3, 0);
             var town3 = new Town(4, 0);
-            var towns = new List<Town>() { town0, town1, town2, town3 };
+            var towns = new Path() { town0, town1, town2, town3 };
 
             var actual = _sut.SwapItems(towns, 0, 1);
 
@@ -213,7 +213,7 @@ namespace Yat.Tests
         [Test]
         public void ShouldGenerteACompletelyShuffledPath()
         {
-            var towns = new List<Town>();
+            var towns = new Path();
             for(var i=0; i< 100; i++)
             {
                 towns.Add(new Town(i, i));
@@ -240,7 +240,7 @@ namespace Yat.Tests
             CountClonesIn(actual).Should().BeLessThan(5);
         }
 
-        int CountClonesIn(List<List<Town>> children)
+        int CountClonesIn(List<Path> children)
         {
             int countClones = 0;
             foreach (var child in children) {
@@ -251,12 +251,15 @@ namespace Yat.Tests
             return countClones;
         }
 
-        List<Town> GenerateTowns(int count)
+        Path GenerateTowns(int count)
         {
-            return GenerateItems(count, () => new Town(0, 0));
+            var path = new Path();
+            Enumerable.Range(1, count).ToList().ForEach(i => path.Add(new Town(0, 0)));
+            return path;
+
         }
 
-        List<List<Town>> GenerateChildren(List<Town> path, int count)
+        List<Path> GenerateChildren(Path path, int count)
         {
             return GenerateItems(count, () => _sut.GenerateChild(path));
         }
